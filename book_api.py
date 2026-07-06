@@ -7,10 +7,13 @@ def get_book_info(title, api_key):
     title = unicodedata.normalize("NFC", title)
 
     params = {
-        "q": title,
+        # 💡 "intitle:" を復活させ、さらに書籍名の前後にスペースを入れないようにします
+        "q": f"intitle:{title}", 
         "maxResults": MAX_RESULTS,
         "key": api_key,
-        "country": "JP"
+        "country": "JP",
+        # 💡 言語を「日本語(ja)」に絶対限定するパラメータを追加します
+        "langRestrict": "ja" 
     }
 
     response = requests.get(
