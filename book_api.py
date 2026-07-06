@@ -33,7 +33,8 @@ def get_book_info(title, api_key):
             volume.get("title", "")
         )
 
-        if api_title == title:
+        #if api_title == title:
+        if title in api_title:
             return {
                 "title": api_title,
                 "authors": ", ".join(volume.get("authors", [])),
