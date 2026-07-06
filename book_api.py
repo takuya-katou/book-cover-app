@@ -21,6 +21,9 @@ def get_book_info(title, api_key):
         return None
 
     data = response.json()
+    # 🛠️ 検索結果が何件届いているか画面に表示するデバッグ
+    import streamlit as st
+    st.write(f"デバッグ: API全体のヒット件数 = {data.get('totalItems', 0)}")
 
     if "items" not in data:
         return None
