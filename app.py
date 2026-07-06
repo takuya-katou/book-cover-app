@@ -7,62 +7,12 @@ from PIL import Image
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 
-# 設定
-THRESHOLD = 0.80  # その他と判定する閾値
-
-API_KEY = st.secrets["GOOGLE_BOOKS_API_KEY"]
-
+from config import *
+from book_api import get_book_info
 
 # Google Books API
 API_KEY = st.secrets["GOOGLE_BOOKS_API_KEY"]
 
-
-def get_book_info(title):
-
-    # Unicodeを正規化
-    title = unicodedata.normalize("NFC", title)
-
-    url = "https://www.googleapis.com/books/v1/volumes"
-
-    params = {
-        "q": f'intitle:"{title}"',
-        "maxResults": 10,
-        "key": API_KEY
-    }
-
-    response = requests.get(url, params=params)
-
-    if response.status_code != 200:
-        return None
-
-    data = response.json()
-
-    if "items" not in data:
-        return None
-
-    for item in data["items"]:
-
-        volume = item["volumeInfo"]
-
-        api_title = unicodedata.normalize(
-            "NFC",
-            volume.get("title", "")
-        )
-
-        # タイトル完全一致
-        if api_title == title:
-
-            return {
-                "title": api_title,
-                "authors": ", ".join(volume.get("authors", [])),
-                "publisher": volume.get("publisher", ""),
-                "publishedDate": volume.get("publishedDate", ""),
-                "description": volume.get("description", ""),
-                "thumbnail": volume.get("imageLinks", {}).get("thumbnail", "")
-            }
-
-    # 完全一致なし
-    return None
 # Streamlit設定
 st.set_page_config(
     page_title="本の表紙判定",
@@ -111,7 +61,7 @@ if uploaded_file is not None:
     if st.button("判定する"):
 
         # 前処理
-        img = image.resize((256, 256))
+        img = image.resize(IMAGE_SIZE)
 
         x = img_to_array(img)
         x = x / 255.0
@@ -160,7 +110,7 @@ if uploaded_file is not None:
         # Google Books API
         if title != "その他":
 
-            book = get_book_info(title)
+            book = get_book_info(title, API_KEY)
 
             if book:
 
