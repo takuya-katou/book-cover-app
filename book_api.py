@@ -33,12 +33,11 @@ def get_book_info(title, api_key):
             volume.get("title", "")
         )
 
-        #if api_title == title:
-# 修正後: 予測したタイトルが APIのタイトルに含まれている、またはその逆ならOKとする
+        # 部分一致チェック
         if (title in api_title) or (api_title in title):
             return {
                 "title": api_title,
-                "authors": ", ".join(volume.get("authors", []))),
+                "authors": ", ".join(volume.get("authors", [])),
                 "publisher": volume.get("publisher", ""),
                 "publishedDate": volume.get("publishedDate", ""),
                 "description": volume.get("description", ""),
