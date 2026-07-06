@@ -111,7 +111,12 @@ if uploaded_file is not None:
         if title != "その他":
 
             book = get_book_info(title, API_KEY)
-
+            # 🛠️ デバッグ用コード（原因がわかったら消してください）
+            st.write(f"--- デバッグ情報 ---")
+            st.write(f"予測されたタイトル: {title}")
+            st.write(f"APIからの取得結果: {book}")
+            st.write(f"--------------------")
+            
             if book:
 
                 st.divider()
