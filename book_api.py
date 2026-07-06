@@ -6,7 +6,7 @@ def get_book_info(title, api_key):
     title = unicodedata.normalize("NFC", title)
 
     params = {
-        "q": f'intitle:"{title}"',
+        "q": title,  # 👈 シンプルにタイトル名だけで検索する
         "maxResults": MAX_RESULTS,
         "key": api_key,
     }
