@@ -10,6 +10,7 @@ def get_book_info(title, api_key):
         "q": title,
         "maxResults": MAX_RESULTS,
         "key": api_key,
+        "country": "JP"
     }
 
     response = requests.get(
