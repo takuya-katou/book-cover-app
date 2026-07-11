@@ -1,4 +1,4 @@
-# Book Cover Recognition App
+# 本の表紙判定アプリ
 
 本の表紙画像をアップロードすると、AIが書籍を判定し、Google Books APIから書籍情報を取得するWebアプリです。
 判定対象は2026年までの本屋大賞受賞作品のみです。
