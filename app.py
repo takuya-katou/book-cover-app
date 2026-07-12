@@ -21,6 +21,20 @@ st.set_page_config(
 
 st.title("📚 本の表紙判定アプリ")
 
+st.markdown("""
+### このアプリについて
+
+本の表紙画像をAIが判定し、タイトルと書籍情報を表示します。
+            
+判定対象は2026年までの本屋大賞受賞作品のみです。
+
+#### 使い方
+1. 本の表紙画像（jpg/png）をアップロード
+2. 「判定する」をクリック
+3. AIの予測結果と書籍情報を表示
+
+※ 学習していない本は判定されない場合があります。
+""")
 
 # モデル読み込み
 @st.cache_resource
@@ -49,8 +63,11 @@ uploaded_file = st.file_uploader(
 
 
 if uploaded_file is not None:
-
-    image = Image.open(uploaded_file)
+    try:
+        image = Image.open(uploaded_file).convert("RGB")
+    except Exception:
+        st.error("画像を読み込めませんでした。")
+        st.stop()
 
     st.image(
         image,
