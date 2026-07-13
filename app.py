@@ -57,16 +57,24 @@ class_names = load_class_names()
 
 # 画像アップロード
 uploaded_file = st.file_uploader(
-    "画像をアップロードしてください",
+    "画像をアップロードしてください　（10MB以下,5000×5000ピクセル以下）",
     type=["jpg", "jpeg", "png"]
 )
 
-
 if uploaded_file is not None:
+
+    if uploaded_file.size > MAX_SIZE:
+        st.error("10MB以下の画像をアップロードしてください。")
+        st.stop()
+
     try:
         image = Image.open(uploaded_file).convert("RGB")
     except Exception:
         st.error("画像を読み込めませんでした。")
+        st.stop()
+
+    if image.width > MAX_WIDTH or image.height > MAX_HEIGHT:
+        st.error("画像サイズが大きすぎます。5000×5000以下の画像を使用してください。")
         st.stop()
 
     st.image(
@@ -76,7 +84,6 @@ if uploaded_file is not None:
     )
 
     if st.button("判定する"):
-
         # 前処理
         img = image.resize(IMAGE_SIZE)
 
