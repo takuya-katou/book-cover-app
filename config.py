@@ -4,3 +4,7 @@ IMAGE_SIZE = (256, 256)
 
 GOOGLE_BOOKS_URL = "https://www.googleapis.com/books/v1/volumes"
 MAX_RESULTS = 10
+
+MAX_SIZE = 10 * 1024 * 1024
+MAX_HEIGHT =5000
+MAX_WIDTH = 5000
